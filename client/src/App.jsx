@@ -5,6 +5,16 @@ function App() {
   const [applications, setApplications] = useState([]);
   const [loading, setLoading] = useState(true);
 
+const [formData, setFormData] = useState({
+  company: "",
+  role: "",
+  status: "Applied",
+  location: "",
+  date_applied: "",
+  application_link: "",
+  notes: "",
+});
+
   useEffect(() => {
     fetchApplications();
   }, []);
@@ -21,6 +31,49 @@ function App() {
       setLoading(false);
     }
   }
+
+function handleChange(event) {
+  setFormData({
+    ...formData,
+    [event.target.name]: event.target.value,
+  });
+}
+
+async function handleSubmit(event) {
+  event.preventDefault();
+
+  try {
+    const response = await fetch(
+      "http://localhost:8000/api/applications",
+      {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(formData),
+      }
+    );
+
+    if (!response.ok) {
+      throw new Error("Failed to create application");
+    }
+
+    await fetchApplications();
+
+    setFormData({
+      company: "",
+      role: "",
+      status: "Applied",
+      location: "",
+      date_applied: "",
+      application_link: "",
+      notes: "",
+    });
+
+  } catch (error) {
+    console.error(error);
+  }
+}
 
   if (loading) {
     return <p className="loading">Loading applications...</p>;
@@ -40,6 +93,77 @@ function App() {
         </div>
       </section>
 
+      <section className="form-section">
+        <h2>Add New Application</h2>
+
+        <form onSubmit={handleSubmit} className="application-form">
+
+          <input
+            type="text"
+            name="company"
+            placeholder="Company"
+            value={formData.company}
+            onChange={handleChange}
+            required
+          />
+
+          <input
+            type="text"
+            name="role"
+            placeholder="Role"
+            value={formData.role}
+            onChange={handleChange}
+            required
+          />
+
+          <select
+            name="status"
+            value={formData.status}
+            onChange={handleChange}
+          >
+            <option>Applied</option>
+            <option>Interview</option>
+            <option>Offer</option>
+            <option>Rejected</option>
+          </select>
+
+          <input
+            type="text"
+            name="location"
+            placeholder="Location"
+            value={formData.location}
+            onChange={handleChange}
+          />
+
+          <input
+            type="date"
+            name="date_applied"
+            value={formData.date_applied}
+            onChange={handleChange}
+          />
+
+          <input
+            type="url"
+            name="application_link"
+            placeholder="Application Link"
+            value={formData.application_link}
+            onChange={handleChange}
+          />
+
+          <textarea
+            name="notes"
+            placeholder="Notes"
+            value={formData.notes}
+            onChange={handleChange}
+          />
+
+          <button type="submit">
+            Add Application
+          </button>
+
+        </form>
+      </section>
+      
       <section className="application-list">
         {applications.map((application) => (
           <div className="application-card" key={application.id}>

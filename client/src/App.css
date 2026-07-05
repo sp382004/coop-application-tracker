@@ -88,3 +88,44 @@ body {
   padding: 32px;
   font-family: Arial, sans-serif;
 }
+
+.form-section {
+  margin: 30px 0;
+}
+
+.application-form {
+  display: grid;
+  gap: 12px;
+  background: white;
+  padding: 20px;
+  border-radius: 12px;
+  border: 1px solid #ddd;
+}
+
+.application-form input,
+.application-form select,
+.application-form textarea {
+  padding: 10px;
+  font-size: 16px;
+  border: 1px solid #ccc;
+  border-radius: 8px;
+}
+
+.application-form textarea {
+  resize: vertical;
+  min-height: 80px;
+}
+
+.application-form button {
+  padding: 12px;
+  font-size: 16px;
+  cursor: pointer;
+  border: none;
+  border-radius: 8px;
+  background: #2563eb;
+  color: white;
+}
+
+.application-form button:hover {
+  background: #1d4ed8;
+}
