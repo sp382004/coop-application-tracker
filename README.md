@@ -55,20 +55,61 @@ FastAPI Backend
       | SQL queries
       v
 Supabase PostgreSQL Database
+```
 
 ## API Endpoints
 
-| Method | Endpoint | Description |
-|---|---|---|
-| GET | `/api/health` | Checks if the backend server is running |
-| GET | `/api/applications` | Retrieves all application records |
-| GET | `/api/applications/{application_id}` | Retrieves one application by ID |
-| POST | `/api/applications` | Creates a new application record |
-| PUT | `/api/applications/{application_id}` | Updates an existing application record |
-| DELETE | `/api/applications/{application_id}` | Deletes an application record |
+### Health Check
+
+```http
+GET /api/health
+```
+
+Checks if the FastAPI backend server is running.
+
+### Get All Applications
+
+```http
+GET /api/applications
+```
+
+Retrieves all saved application records from the PostgreSQL database.
+
+### Get One Application
+
+```http
+GET /api/applications/{application_id}
+```
+
+Retrieves a single application record by its ID.
+
+### Create Application
+
+```http
+POST /api/applications
+```
+
+Creates a new internship or co-op application record.
+
+### Update Application
+
+```http
+PUT /api/applications/{application_id}
+```
+
+Updates an existing application record.
+
+### Delete Application
+
+```http
+DELETE /api/applications/{application_id}
+```
+
+Deletes an application record from the database.
 
 ## Database Schema
 
+```sql
 CREATE TABLE applications (
     id SERIAL PRIMARY KEY,
     company VARCHAR(100) NOT NULL,
@@ -80,7 +121,11 @@ CREATE TABLE applications (
     notes TEXT,
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 );
+```
 
+## Project Structure
+
+```text
 coop-application-tracker/
 │
 ├── client/
@@ -97,3 +142,4 @@ coop-application-tracker/
 │
 ├── README.md
 └── .gitignore
+```
